@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="file:/Users/SejongPark/dev/workspace/intelliJ/mybatis-squid/jpetstore-6-master/src/main/webapp/WEB-INF/applicationContext.xml")
+@ContextConfiguration(locations="classpath*:/context/applicationContext.xml")
 public class MyBatisMapperTest {
 
     @Autowired
@@ -20,6 +20,8 @@ public class MyBatisMapperTest {
     public void test() throws InterruptedException {
         MyBatisMapper myBatisMapper = new MyBatisMapper(sqlSessionFactory);
         new MyBatisMapperClient(myBatisMapper).run();
+
+
         Thread.sleep(1000000000L);
     }
 
