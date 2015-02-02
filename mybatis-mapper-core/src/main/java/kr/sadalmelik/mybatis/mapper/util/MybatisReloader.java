@@ -1,6 +1,5 @@
 package kr.sadalmelik.mybatis.mapper.util;
 
-import kr.sadalmelik.mybatis.mapper.util.CheetahXMLParser;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.session.Configuration;
@@ -14,10 +13,17 @@ public class MybatisReloader {
     private Configuration configuration;
     private CheetahXMLParser cheetahXMLParser = new CheetahXMLParser();
     private List<WatchTarget> watchTargets;
+    private String watchBasePath;
 
     public MybatisReloader(Configuration configuration) {
         this.configuration = configuration;
     }
+
+    public MybatisReloader(Configuration configuration, String watchBasePath) {
+        this.configuration = configuration;
+        this.watchBasePath = watchBasePath;
+    }
+
 
     //xml파일을 읽은 뒤 파일이 변경될 경우 리로드합니다.
     public void reload() throws Exception {
@@ -30,8 +36,13 @@ public class MybatisReloader {
         //감시하는 파일 리스트
         for (String rawLoadedResource : rawLoadedResourceSet) {
             if (rawLoadedResource.endsWith(".xml")) {
-                URL fileUrl = ClassLoader.getSystemResource(rawLoadedResource);
-                File file = new File(fileUrl.getFile());
+                File file;
+                if (watchBasePath == null) {
+                    URL fileUrl = ClassLoader.getSystemResource(rawLoadedResource);
+                    file = new File(fileUrl.getFile());
+                } else {
+                    file = new File(watchBasePath + File.separator + rawLoadedResource);
+                }
 
                 watchTargets.add(new WatchTarget(rawLoadedResource, file, file.lastModified()));
             }
@@ -42,8 +53,7 @@ public class MybatisReloader {
         thread.start();
     }
 
-
-    //파일 왓쳐
+    //파일 감시 쓰래드
     private class ResourceWatcher extends Thread {
 
         private List<WatchTarget> watchTargets;

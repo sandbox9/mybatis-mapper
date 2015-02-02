@@ -1,6 +1,7 @@
 package kr.sadalmelik.mybatis.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.sadalmelik.mybatis.mapper.ui.MyBatisMapperClient;
 import kr.sadalmelik.mybatis.mapper.util.MybatisReloader;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -13,6 +14,18 @@ import java.util.HashMap;
 public class MyBatisMapper {
     private SqlSessionFactory sqlSessionFactory;
     private ObjectMapper mapper;
+
+    public MyBatisMapper(SqlSessionFactory sqlSessionFactory, String watchBasePath) {
+        this.sqlSessionFactory = sqlSessionFactory;
+        this.mapper = new ObjectMapper();
+
+        try {
+            new MybatisReloader(sqlSessionFactory.getConfiguration(), watchBasePath).reload();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public MyBatisMapper(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionFactory = sqlSessionFactory;
@@ -39,7 +52,7 @@ public class MyBatisMapper {
         BoundSql boundSql = ms.getBoundSql(paramterObject);
 
         result.append("변환된 SQL : " + "\n");
-        result.append(boundSql.getSql() + "\n\n");
+        result.append(boundSql.getSql() + "\n\n\n");
 
 
         if (statementType.equals(StatementType.PREPARED)) {
@@ -79,13 +92,23 @@ public class MyBatisMapper {
 
         @Override
         public void handleResult(ResultContext context) {
+            System.out.println("111");
             result.append("SELECT실행!\n");
             result.append("총 갯수는.." + context.getResultCount() + "\n");
             result.append(context.getResultObject());
         }
     }
 
+    public static void run(SqlSessionFactory sqlSessionFactory, String watchBasePath){
+        MyBatisMapper mybatisMapper = new MyBatisMapper(sqlSessionFactory, watchBasePath);
+        MyBatisMapperClient myBatisMapperClient = new MyBatisMapperClient(mybatisMapper);
+        myBatisMapperClient.run();
+    }
 
+
+    public static void run(SqlSessionFactory sqlSessionFactory){
+        run(sqlSessionFactory,"");
+    }
 }
 
 

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 public class MyBatisMapperClient extends JPanel {
     private MyBatisMapper myBatisMapper;
+    private String watchBasePath;
 
     public MyBatisMapperClient(MyBatisMapper myBatisMapper) {
         this.myBatisMapper = myBatisMapper;
@@ -50,6 +51,7 @@ public class MyBatisMapperClient extends JPanel {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     private JPanel getMainPanel() {

@@ -45,7 +45,7 @@ public class CheetahXMLParser {
             removeSelectKeyNode(context);
 
             String mapperId = context.getStringAttribute("id");
-            SqlSource sqlSource = langDriver.createSqlSource(dummyConfiguration, context, HashMap.class);
+            SqlSource sqlSource = langDriver.createSqlSource(dummyConfiguration, context, null);
 
             crudSqlSourceMap.put(mapperId, sqlSource);
         }
