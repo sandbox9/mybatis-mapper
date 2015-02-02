@@ -14,7 +14,6 @@ public class MyBatisMapperClient extends JPanel {
         this.myBatisMapper = myBatisMapper;
     }
 
-
     private JTextField mapperIdField;
     private JTextArea paramJsonTextArea;
 
@@ -63,7 +62,6 @@ public class MyBatisMapperClient extends JPanel {
         public void actionPerformed(ActionEvent e) {
             System.out.println(mapperIdField.getText());
             System.out.println(paramJsonTextArea.getText());
-
 
             myBatisMapper.bind(mapperIdField.getText(), paramJsonTextArea.getText());
         }

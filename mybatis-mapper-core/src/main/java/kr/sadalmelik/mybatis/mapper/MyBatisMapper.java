@@ -15,9 +15,14 @@ public class MyBatisMapper {
     public MyBatisMapper(SqlSessionFactory sqlSessionFactory) {
         this.sqlSessionFactory = sqlSessionFactory;
         this.mapper = new ObjectMapper();
+
+        try {
+            new MybatisReloader(sqlSessionFactory.getConfiguration()).reload();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    //TODO 단순화
     public void bind(String id, String paramterJson) {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         Configuration configuration = sqlSession.getConfiguration();
