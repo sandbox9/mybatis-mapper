@@ -1,9 +1,9 @@
-package kr.sadalmelik.mybatis.mapper;
+package kr.sadalmelik.mybatis.mapper.util;
 
+import kr.sadalmelik.mybatis.mapper.util.CheetahXMLParser;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.io.File;
 import java.lang.reflect.Field;

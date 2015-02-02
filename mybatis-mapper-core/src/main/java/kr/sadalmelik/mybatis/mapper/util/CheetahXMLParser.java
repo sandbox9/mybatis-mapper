@@ -1,4 +1,4 @@
-package kr.sadalmelik.mybatis.mapper;
+package kr.sadalmelik.mybatis.mapper.util;
 
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.parsing.XNode;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 //xml을 Map<key, SqlSource>로 변환합니다.
-class CheetahXMLParser {
+public class CheetahXMLParser {
 
     private XMLLanguageDriver langDriver = new XMLLanguageDriver();
     private Configuration dummyConfiguration = new Configuration();

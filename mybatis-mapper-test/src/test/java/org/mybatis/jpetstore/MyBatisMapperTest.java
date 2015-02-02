@@ -1,7 +1,7 @@
 package org.mybatis.jpetstore;
 
 import kr.sadalmelik.mybatis.mapper.MyBatisMapper;
-import kr.sadalmelik.mybatis.mapper.MyBatisMapperClient;
+import kr.sadalmelik.mybatis.mapper.ui.MyBatisMapperClient;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
